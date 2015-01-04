@@ -1,11 +1,11 @@
-.mws-title {
+.schema-title {
     font-size: 2em;
-    background-color: #b21b1b;
+    background-color: #002366;
     color: #fff;
     padding: .75em;
 }
 
-.mws-title:hover {
+.schema-title:hover {
     text-decoration: none;
     color: #fff;
 }
