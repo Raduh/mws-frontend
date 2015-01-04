@@ -1,9 +1,10 @@
-MWS.useMathJax = undefined; 
+/* always use MathJax */
+MWS.useMathJax = true; 
 
 (function(){
-	//check if we need MathML
-	var agent = navigator.userAgent;
-	MWS.useMathJax = !((agent.indexOf('Gecko') > -1) && (agent.indexOf('KHTML') === -1) || agent.match(/MathPlayer/) );
+	// check if we need MathML
+	// var agent = navigator.userAgent;
+	// MWS.useMathJax = !((agent.indexOf('Gecko') > -1) && (agent.indexOf('KHTML') === -1) || agent.match(/MathPlayer/) );
 
 	if(MWS.config.mathjax_force){
 		MWS.useMathJax = true; 
@@ -19,11 +20,14 @@ MWS.useMathJax = undefined;
 				if(!suc){
 					console.error("Unable to load MathJax! You need an internet connection for that! ");
 					MWS.gui.renderSearchFailure("MathJax failed to load, MathML might look ugly ..."); 
-					MWS.canMathML = true; //we can't, but couldnt load MathJax, so lets try it anyways
+					MWS.canMathML = true; // we can't, but couldnt load MathJax, so lets try it anyways
 				} else {
 					MathJax.Hub.Config({
 		              jax: ["input/MathML", "output/HTML-CSS","output/NativeMML"], 
-		              skipStartupTypeset: true //do not auto parse things
+		              skipStartupTypeset: true, //do not auto parse things
+                      MathML: {
+                        extensions: ["content-mathml.js"]
+                      }
 		            });
 				}
 
@@ -40,7 +44,7 @@ MWS.makeMath = function($element){
 	if(MWS.useMathJax){
 		//we have MathJax loaded
 		//check everything here for MathML (Presentation)
-		//and add it to the MathJax Quenue
+		//and add it to the MathJax Queue
 		$element.each(function(){
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub, this]);
 		}); 
