@@ -68,16 +68,16 @@ MWS.gui = {
 		});
 	},
     "renderSearchResults" : function(results) {
-        var schemata = results["schemata"] || "<p>error</p>";
+        var schemata = results["schemata"] || "<p>No results.</p>";
         var $res = $("#results").empty();
         $res.append(schemata);
         $("<br/>").insertAfter("mws\\:schema");
         // mws:qvar needs to be rendered properly
         var qvars = $("mws\\:qvar");
-        console.log("qvars length: " + qvars.length);
         for (var i = 0; i < qvars.length; i++) {
             var qvar = qvars[i];
-            var replacement = '<mi class="math-highlight-qvar">' + $(qvar).text() + '</mi>';
+            var replacement = '<mi class="math-highlight-qvar">' + 
+                $(qvar).text() + '</mi>';
             $(qvar).replaceWith(replacement);
         }
 
