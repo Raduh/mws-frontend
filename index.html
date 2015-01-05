@@ -36,10 +36,16 @@
 
                 <form role="form" id="query-form">
                     <div class="input-group">
-                        <input class="form-control" name="query-text" id="query-text" placeholder="Search Text" value=""/>
+                        <input class="form-control" name="query-text"
+                        id="query-text" placeholder="Search Text" value=""
+                        style="width: 95%;"/>
+                        <input type="number" min="0" placeholder="3"
+                        class="form-control" id="query-depth" value="3"
+                        style="width: 5%;"
+                        />
                         <span class="input-group-btn" role="group">
-                            <div class="btn-group" id="examplebuttons"></div>
-                            <input type="button" class="btn btn-default" id="start-search" value="Search" />
+                            <input type="button" class="btn btn-default"
+                            id="start-search" value="Search" />
                         </span>
                     </div>
 
