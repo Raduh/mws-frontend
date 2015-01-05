@@ -1,10 +1,10 @@
 /* always use MathJax */
-MWS.useMathJax = true; 
+MWS.useMathJax = undefined; 
 
 (function(){
 	// check if we need MathML
-	// var agent = navigator.userAgent;
-	// MWS.useMathJax = !((agent.indexOf('Gecko') > -1) && (agent.indexOf('KHTML') === -1) || agent.match(/MathPlayer/) );
+	 var agent = navigator.userAgent;
+	 MWS.useMathJax = !((agent.indexOf('Gecko') > -1) && (agent.indexOf('KHTML') === -1) || agent.match(/MathPlayer/) );
 
 	if(MWS.config.mathjax_force){
 		MWS.useMathJax = true; 
