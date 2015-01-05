@@ -13,9 +13,11 @@ MWS.gui = {
 		// For backwards compatibility, URLs which do not have "query-math"
 		// parameter can get the math query from "query" parameter
 		var query_text = getParameterByName("query-text");
+        var query_depth = getParameterByName("query-depth");
 
-		if(query_text){
+		if(query_text || query_depth){
 			$(document.getElementById("query-text")).val(query_text || "");
+            $(document.getElementById("query-depth")).val(query_depth || "");
 			MWS.gui.runSearch();
 		}
 
@@ -39,11 +41,17 @@ MWS.gui = {
 		return $(document.getElementById("query-text")).val();
 	},
 
+	"getSearchDepth": function(){
+		return $(document.getElementById("query-depth")).val();
+	},
+
 	"performSearch": function(){
 		var text = MWS.gui.getSearchText();
+        var depth = MWS.gui.getSearchDepth();
 
 		window.history.pushState("", window.title, resolve(
-			"?query-text="+encodeURIComponent(text)
+            "?query-text="+encodeURIComponent(text) +
+            "&query-depth="+encodeURIComponent(depth)
 		));
 
 		// Log piwik search data
@@ -59,7 +67,7 @@ MWS.gui = {
 			.text("Querying server, please wait ...")
 		);
 
-		var myQuery = new MWS.query(text); //create a new query
+		var myQuery = new MWS.query(text, depth); //create a new query
 
 		myQuery.getAll(function(res){
 			MWS.gui.renderSearchResults(res, 0);
