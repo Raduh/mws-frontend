@@ -25,9 +25,6 @@ MWS.useMathJax = undefined;
 					MathJax.Hub.Config({
 		              jax: ["input/MathML", "output/HTML-CSS","output/NativeMML"], 
 		              skipStartupTypeset: true, //do not auto parse things
-                      MathML: {
-                        extensions: ["content-mathml.js"]
-                      }
 		            });
 				}
 

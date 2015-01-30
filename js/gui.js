@@ -76,19 +76,20 @@ MWS.gui = {
 		});
 	},
     "renderSearchResults" : function(results) {
-        var schemata = results["schemata"] || "<p>No results.</p>";
         var $res = $("#results").empty();
-        $res.append(schemata);
-        $("<br/>").insertAfter("mws\\:schema");
-        // mws:qvar needs to be rendered properly
-        var qvars = $("mws\\:qvar");
-        for (var i = 0; i < qvars.length; i++) {
-            var qvar = qvars[i];
-            var replacement = '<mi class="math-highlight-qvar">' + 
-                $(qvar).text() + '</mi>';
-            $(qvar).replaceWith(replacement);
+        if (!results["schemata"]) {
+            $res.append("<p>No results.</p>");
+            return;
         }
 
+        MWS.gui.processProxyReply(results);
+            
+        results.schemata.map(function(schema) {
+            var title = $("<math></math>");
+            title.append(schema['title']);
+            $res.append(title);
+            $res.append("<br/>");
+        });
         MWS.makeMath($res);
     },
 
@@ -99,5 +100,40 @@ MWS.gui = {
 			$("<h4>").text("Sorry, "),
 			$("<div>").text(msg)
 		);
-	}
+	},
+
+    "processProxyReply" : function(proxy_reply) {
+        proxy_reply.schemata.forEach(function(schema) {
+            schema['title'] = MWS.gui.schematizeFormula(schema['title'],
+                schema['subst']);
+        });
+    },
+
+    "schematizeFormula" : function(formula, substitutions) {
+        // if there are few substitutions we will just use letters
+        var useCounter = substitutions.length > 26;
+        var qvar = useCounter ? 1 : "a";
+
+        var nextQvar = function(currQvar) {
+            if (!useCounter) {
+                var pos = currQvar.length - 1;
+                return currQvar.substring(0, pos) +
+                    String.fromCharCode(currQvar.charCodeAt(pos) + 1);
+            }
+            return "?x" + (currQvar + 1);
+        };
+
+        var schema = $(formula);
+        
+        substitutions.map(function(subst) {
+            var cutElem = schema.find("[id='" + subst + "']");
+            if (cutElem.children().length == 0) {
+                cutElem.attr("mathcolor", "red");
+            } else {
+                cutElem.html("<mi mathcolor='red'>" + "?" + qvar + "</mi>");
+                qvar = nextQvar(qvar);
+            }
+        });
+        return schema;
+    }
 };
