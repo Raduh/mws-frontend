@@ -120,7 +120,7 @@ MWS.gui = {
                 return currQvar.substring(0, pos) +
                     String.fromCharCode(currQvar.charCodeAt(pos) + 1);
             }
-            return "?x" + (currQvar + 1);
+            return "x" + (currQvar + 1);
         };
 
         var schema = $(formula);
