@@ -120,7 +120,7 @@ MWS.gui = {
                 return currQvar.substring(0, pos) +
                     String.fromCharCode(currQvar.charCodeAt(pos) + 1);
             }
-            return "x" + (currQvar + 1);
+            return currQvar + 1;
         };
 
         var schema = $(formula);
@@ -130,7 +130,10 @@ MWS.gui = {
             if (cutElem.children().length == 0) {
                 cutElem.attr("mathcolor", "red");
             } else {
-                cutElem.html("<mi mathcolor='red'>" + "?" + qvar + "</mi>");
+                var qvar_str;
+                if (useCounter) qvar_str = "?x" + qvar;
+                else qvar_str = "?" + qvar;
+                cutElem.html("<mi mathcolor='red'>" + qvar_str + "</mi>");
                 qvar = nextQvar(qvar);
             }
         });
