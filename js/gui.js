@@ -85,7 +85,7 @@ MWS.gui = {
         MWS.gui.processProxyReply(results);
             
         results.schemata.map(function(schema) {
-            var title = $("<math></math>");
+            var title = $("<schema></schema>");
             title.append(schema['title']);
             $res.append(title);
             $res.append("<br/>");
