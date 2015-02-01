@@ -1,11 +1,11 @@
 MWS.gui = {
-	"init": function(){
+	"init": function() {
 
-		$(document.getElementById("start-search")).click(function(){
+		$(document.getElementById("start-search")).click(function() {
 			$(document.getElementById("query-form")).submit();
 		});
 
-		$(document.getElementById("query-form")).submit(function(){
+		$(document.getElementById("query-form")).submit(function() {
 			MWS.gui.runSearch();
 			return false;
 		})
@@ -15,29 +15,29 @@ MWS.gui = {
 		var query_text = getParameterByName("query-text");
         var query_depth = getParameterByName("query-depth");
 
-		if(query_text || query_depth){
+		if (query_text || query_depth) {
 			$(document.getElementById("query-text")).val(query_text || "");
             $(document.getElementById("query-depth")).val(query_depth || "");
 			MWS.gui.runSearch();
 		}
 
-		if(document.location.hash !== ""){
+		if (document.location.hash !== "") {
 			MWS.init_page = parseInt(document.location.hash.substr(1)) - 1;
 
-			//something weird
-			if(MWS.init_page % 1 !== 0 || MWS.init_page <= 0){
-				MWS.init_page = undefined;
+			// something weird
+			if (MWS.init_page % 1 !== 0 || MWS.init_page <= 0) {
+				delete MWS.init_page;
 			}
 		}
 
         $("#examplebuttons").remove();
 	},
 
-	"runSearch": function(){
+	"runSearch": function() {
 			MWS.gui.performSearch();
 	},
 
-	"getSearchText": function(){
+	"getSearchText": function() {
 		return $(document.getElementById("query-text")).val();
 	},
 
@@ -107,7 +107,10 @@ MWS.gui = {
     "processProxyReply" : function(proxy_reply) {
         proxy_reply.schemata.forEach(function(schema) {
             /* Ignore cerrors */
-            if (schema['title'].indexOf("cerror") > -1) return;
+            if (schema['title'].indexOf("cerror") > -1) {
+                delete schema['title'];
+                return;
+            }
 
             schema['title'] = MWS.gui.schematizeFormula(schema['title'],
                 schema['subst']);
