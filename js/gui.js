@@ -88,6 +88,7 @@ MWS.gui = {
             /* An error occured and this schema does not have a title */
             if (!schema['title']) return;
             var title = $("<schema></schema>");
+            title.attr("coverage", schema['coverage']);
             title.append(schema['title']);
             $res.append(title);
             $res.append("<br/>");
