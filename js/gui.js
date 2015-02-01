@@ -84,7 +84,9 @@ MWS.gui = {
 
         MWS.gui.processProxyReply(results);
             
-        results.schemata.map(function(schema) {
+        results.schemata.forEach(function(schema) {
+            /* An error occured and this schema does not have a title */
+            if (!schema['title']) return;
             var title = $("<schema></schema>");
             title.append(schema['title']);
             $res.append(title);
@@ -104,6 +106,9 @@ MWS.gui = {
 
     "processProxyReply" : function(proxy_reply) {
         proxy_reply.schemata.forEach(function(schema) {
+            /* Ignore cerrors */
+            if (schema['title'].indexOf("cerror") > -1) return;
+
             schema['title'] = MWS.gui.schematizeFormula(schema['title'],
                 schema['subst']);
         });
