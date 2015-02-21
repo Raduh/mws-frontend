@@ -11,7 +11,7 @@ MWS.config = {
 	"mws_warn_highlight": false, //warn about failed highlights
 	"mws_highlight_colors": ["blue", "green", "purple", "orange", "red"], //colors for show substitutions. Set to an empty array to disable.
 
-	"mathjax_force": false, //force to use MathJax
+	"mathjax_force": true, //force to use MathJax
 	"mathjax_cdn_url": //MathJax CDN
 		"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML",
 
