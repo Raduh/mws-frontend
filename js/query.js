@@ -48,7 +48,7 @@ MWS.query = function(text, depth){
 		var callback = (typeof callback == "function")?callback:function(){}; 
 		var callback_fail = (typeof callback_fail == "function")?callback:function(){}; 
 
-		get(0, 10, function(data){
+		get(0, 40, function(data){
 			callback(data);
 		}, callback_fail); 
 	}

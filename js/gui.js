@@ -56,10 +56,11 @@ MWS.gui = {
 
 		// Log piwik search data
 		if (typeof _paq !== 'undefined') {
-			_paq.push(["trackSiteSearch", encodeURIComponent(text), "text", false]);
+			_paq.push(["trackSiteSearch", encodeURIComponent(text),
+                    "text", false]);
 		}
 
-		$("#results")
+		$("#resultsDiv")
 		.empty()
 		.append(
 			$(document.createElement("span"))
@@ -72,33 +73,72 @@ MWS.gui = {
 		myQuery.getAll(function(res){
 			MWS.gui.renderSearchResults(res, 0);
 		}, function(){
-			MWS.gui.renderSearchFailure("Unable to search, please check your connection and try again. ");
+			MWS.gui.renderSearchFailure(
+                "Unable to search, please check your connection and try again. "
+            );
 		});
 	},
+
     "renderSearchResults" : function(results) {
-        var $res = $("#results").empty();
+        var $res = $("#resultsDiv").empty();
         if (!results["schemata"]) {
             $res.append("<p>No results.</p>");
             return;
         }
 
         MWS.gui.processProxyReply(results);
-            
+
+        var resultId = 1;    
         results.schemata.forEach(function(schema) {
             /* An error occured and this schema does not have a title */
             if (!schema['title']) return;
-            var title = $("<schema></schema>");
-            title.attr("coverage", schema['coverage']);
-            title.append(schema['title']);
-            $res.append(title);
+            $res.append(MWS.gui.renderResult(schema, resultId));
             $res.append("<br/>");
+            resultId++;
         });
-        MWS.makeMath($res);
+    },
+
+    "renderResult" : function(schema, resId) {
+        var titleElem = $("<span>");
+        var coverage = $("<div>");
+        coverage.addClass("coverage");
+        coverage.text(schema['coverage']);
+
+        titleElem.append(coverage);
+        titleElem.append(MWS.makeMath(schema['title']));
+
+        var bodyHtml = $("<div>");
+        schema['formulae'].forEach(function(fmla) {
+            bodyHtml.append(fmla);
+            bodyHtml.append("<br/");
+        });
+        var bodyDiv = $("<div>")
+            .addClass("panel-body")
+            .append(bodyHtml);
+        
+        return $("<div>").addClass("panel panel-default")
+            .append(
+                    $("<div>").addClass("panel-heading").append(
+                        $("<h4>").addClass("panel-title")
+                        .append(
+                            $("<a>").attr({
+                                "data-toggle": "collapse",
+                                "data-parent": "#resultsDiv",
+                                "href" : "#resultId" + resId
+                            })
+                            .append(MWS.makeMath(titleElem))
+                        )
+                    ),
+                    $("<div>")
+                    .addClass("panel-collapse collapse")
+                    .attr("id", "resultId" + resId)
+                    .append(MWS.makeMath(bodyDiv))
+        );
     },
 
 	"renderSearchFailure": function(msg){
 		//render search Failure
-		$("#results").empty()
+		$("#resultsDiv").empty()
 		.append(
 			$("<h4>").text("Sorry, "),
 			$("<div>").text(msg)
