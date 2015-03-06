@@ -102,6 +102,7 @@ MWS.gui = {
         var titleElem = $("<span>");
         var coverage = $("<div>");
         coverage.addClass("coverage");
+        coverage.addClass("pull-left");
         coverage.text(schema['coverage']);
 
         titleElem.append(coverage);

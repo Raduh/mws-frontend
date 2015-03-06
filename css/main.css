@@ -73,3 +73,10 @@ a.footlink:hover {
 #math-preview {
 	font-size: 200%; 
 }
+
+.coverage {
+    font-size: 200%;
+    font-weight: bold;
+    margin-top: -5px;
+}
+
