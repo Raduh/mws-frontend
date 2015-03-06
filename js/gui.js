@@ -110,7 +110,7 @@ MWS.gui = {
         var bodyHtml = $("<div>");
         schema['formulae'].forEach(function(fmla) {
             bodyHtml.append(fmla);
-            bodyHtml.append("<br/");
+            bodyHtml.append("<br/>");
         });
         var bodyDiv = $("<div>")
             .addClass("panel-body")
