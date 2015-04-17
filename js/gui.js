@@ -109,8 +109,15 @@ MWS.gui = {
         titleElem.append(MWS.makeMath(schema['title']));
 
         var bodyHtml = $("<div>");
-        schema['formulae'].forEach(function(fmla) {
-            bodyHtml.append(fmla);
+        schema['formulae'].forEach(function(exprWithUrl) {
+            var fmla = exprWithUrl['expr'];
+            var url = MWS.config.id_to_link(exprWithUrl['url']);
+            
+            var exprDiv = $("<a>").addClass('formula-link')
+                                  .attr('href', url);
+            exprDiv.append(fmla);
+
+            bodyHtml.append(exprDiv);
             bodyHtml.append("<br/>");
         });
         var bodyDiv = $("<div>")
