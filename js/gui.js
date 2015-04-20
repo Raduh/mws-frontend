@@ -18,9 +18,11 @@ MWS.gui = {
 
         if (cutoff_mode) {
             if (cutoff_mode == 'R') {
-                $(document.getElementById("cutoff-mode")).checked = true;
+                $(document.getElementById("cutoff-mode")).
+                    attr('checked', true);
             } else {
-                $(document.getElementById("cutoff-mode")).checked = false;
+                $(document.getElementById("cutoff-mode")).
+                    attr('checked', false);
             }
         }
 
