@@ -44,7 +44,9 @@
                     <div class="input-group">
                         <input class="form-control" name="query-text"
                         id="query-text" placeholder="Search Text" value=""
-                        style="width: 90%;"/>
+                        style="width: 85%;"/>
+                        <input type="checkbox" name="cutoff-mode"
+                                id="cutoff-mode">R</input>
                         <input type="number" min="0" placeholder="3"
                         class="form-control" id="query-depth" value="3"
                         style="width: 10%;"
@@ -63,6 +65,15 @@
                 schemata which cover the math in the documents containing the
                 keyword. Each formula schemata returned is accompanied by a
                 group of formulae which are instantiations of it. 
+                <br />
+                You can also enter a depth for the schemata (how deep the
+                schemata should be) and check the R checkbox if you would like
+                this depth to be relative. If you do not check the box,
+                absolute depth is assumed.
+                <br/>
+                If the depth is relative, its value should be entered in
+                percentages, e.g. for a depth of 50%, 50 should be entered for
+                the relative depth.
                 </p>
 
                 <br />

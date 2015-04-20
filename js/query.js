@@ -1,9 +1,10 @@
-MWS.query = function(text, depth){
+MWS.query = function(text, depth, cutoffMode){
 	var me = this; 
 
 	//store parameters for query
 	this._text = text; 
     this._depth = depth;
+    this._cutoffMode = cutoffMode;
 	this._cached = false; 
 
 	var get = function(start, size, callback, callback_fail){
@@ -24,6 +25,7 @@ MWS.query = function(text, depth){
 		var data = {
 			"text": me._text, 
             "depth" : me._depth,
+            "cutoffMode" : me._cutoffMode,
 			"from": start, 
 			"size": size
 		}; 

@@ -14,6 +14,15 @@ MWS.gui = {
 		// parameter can get the math query from "query" parameter
 		var query_text = getParameterByName("query-text");
         var query_depth = getParameterByName("query-depth");
+        var cutoff_mode = getParameterByName("cutoff-mode");
+
+        if (cutoff_mode) {
+            if (cutoff_mode == 'R') {
+                $(document.getElementById("cutoff-mode")).checked = true;
+            } else {
+                $(document.getElementById("cutoff-mode")).checked = false;
+            }
+        }
 
 		if (query_text || query_depth) {
 			$(document.getElementById("query-text")).val(query_text || "");
@@ -42,16 +51,26 @@ MWS.gui = {
 	},
 
 	"getSearchDepth": function(){
-		return $(document.getElementById("query-depth")).val();
+		var depth = $(document.getElementById("query-depth")).val();
+        if (depth > 100) depth = 100;
+        return depth;
 	},
+
+    "getCutoffMode": function() {
+        var isChecked = $(document.getElementById('cutoff-mode')).is(':checked');
+        if (isChecked) return 'R';  // relative
+        return 'A';  // absolute
+    },
 
 	"performSearch": function(){
 		var text = MWS.gui.getSearchText();
         var depth = MWS.gui.getSearchDepth();
+        var cutoffMode = MWS.gui.getCutoffMode();
 
 		window.history.pushState("", window.title, resolve(
             "?query-text="+encodeURIComponent(text) +
-            "&query-depth="+encodeURIComponent(depth)
+            "&query-depth="+encodeURIComponent(depth) +
+            "&cutoff-mode="+encodeURIComponent(cutoffMode)
 		));
 
 		// Log piwik search data
@@ -68,7 +87,8 @@ MWS.gui = {
 			.text("Querying server, please wait ...")
 		);
 
-		var myQuery = new MWS.query(text, depth); //create a new query
+        //create a new query
+		var myQuery = new MWS.query(text, depth, cutoffMode);
 
 		myQuery.getAll(function(res){
 			MWS.gui.renderSearchResults(res, 0);
