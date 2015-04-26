@@ -206,13 +206,13 @@ MWS.gui = {
         
         substitutions.map(function(subst) {
             var cutElem = schema.find("[id='" + subst + "']");
-            if (cutElem.children().length == 0) {
-                cutElem.attr("mathcolor", "red");
+            if (cutElem.children().length == 0 && MWS.config.keep_leaves_name) {
+                cutElem.attr("mathcolor", "#0066FF");
             } else {
                 var qvar_str;
                 if (useCounter) qvar_str = "?x" + qvar;
                 else qvar_str = "?" + qvar;
-                cutElem.html("<mi mathcolor='red'>" + qvar_str + "</mi>");
+                cutElem.replaceWith("<mi mathcolor='#0066FF'>" + qvar_str + "</mi>");
                 qvar = nextQvar(qvar);
             }
         });
