@@ -205,14 +205,18 @@ MWS.gui = {
         var schema = $(formula);
         
         substitutions.map(function(subst) {
-            var cutElem = schema.find("[id='" + subst + "']");
-            if (cutElem.children().length == 0 && MWS.config.keep_leaves_name) {
-                cutElem.attr("mathcolor", "#0066FF");
+            var cutElemPM = schema.find("[id='" + subst + "']");
+            var cutElemCM = schema.find("[xref='" + subst + "']");
+
+            if (cutElemPM.children().length == 0 && MWS.config.keep_leaves_name) {
+                cutElemPM.attr("mathcolor", "#0066FF");
+                cutElemCM.replaceWith("<qvar>" + qvar_str + "</qvar>");
             } else {
                 var qvar_str;
                 if (useCounter) qvar_str = "?x" + qvar;
                 else qvar_str = "?" + qvar;
-                cutElem.replaceWith("<mi mathcolor='#0066FF'>" + qvar_str + "</mi>");
+                cutElemPM.replaceWith("<mi mathcolor='#0066FF'>" + qvar_str + "</mi>");
+                cutElemCM.replaceWith("<qvar>" + qvar_str + "</qvar>");
                 qvar = nextQvar(qvar);
             }
         });
