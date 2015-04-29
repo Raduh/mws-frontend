@@ -129,6 +129,9 @@ MWS.gui = {
 
         titleElem.append(coverage);
         titleElem.append(MWS.makeMath(schema['title']));
+        titleElem.find("*[mathcolor=red]").removeAttr("mathcolor").each(function() {
+            this.setAttribute("class", "math-highlight-qvar");
+        });
 
         var bodyHtml = $("<div>");
         schema['formulae'].forEach(function(exprWithUrl) {
@@ -209,14 +212,13 @@ MWS.gui = {
             var cutElemCM = schema.find("[xref='" + subst + "']");
 
             if (cutElemPM.children().length == 0 && MWS.config.keep_leaves_name) {
-                cutElemPM.addClass("math-highlight-qvar");
+                cutElemPM.attr("mathcolor", "#0066FF");
                 cutElemCM.replaceWith("<qvar>" + qvar_str + "</qvar>");
             } else {
                 var qvar_str;
                 if (useCounter) qvar_str = "?x" + qvar;
                 else qvar_str = "?" + qvar;
-                cutElemPM.replaceWith("<mi>" + qvar_str + "</mi>");
-                cutElemCM.addClass("math-highlight-qvar");
+                cutElemPM.replaceWith("<mi mathcolor='#0066FF'>" + qvar_str + "</mi>");
                 cutElemCM.replaceWith("<qvar>" + qvar_str + "</qvar>");
                 qvar = nextQvar(qvar);
             }
