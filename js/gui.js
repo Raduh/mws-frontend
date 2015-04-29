@@ -209,13 +209,14 @@ MWS.gui = {
             var cutElemCM = schema.find("[xref='" + subst + "']");
 
             if (cutElemPM.children().length == 0 && MWS.config.keep_leaves_name) {
-                cutElemPM.attr("mathcolor", "#0066FF");
+                cutElemPM.addClass("math-highlight-qvar");
                 cutElemCM.replaceWith("<qvar>" + qvar_str + "</qvar>");
             } else {
                 var qvar_str;
                 if (useCounter) qvar_str = "?x" + qvar;
                 else qvar_str = "?" + qvar;
-                cutElemPM.replaceWith("<mi mathcolor='#0066FF'>" + qvar_str + "</mi>");
+                cutElemPM.replaceWith("<mi>" + qvar_str + "</mi>");
+                cutElemCM.addClass("math-highlight-qvar");
                 cutElemCM.replaceWith("<qvar>" + qvar_str + "</qvar>");
                 qvar = nextQvar(qvar);
             }
