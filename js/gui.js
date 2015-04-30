@@ -118,12 +118,6 @@ MWS.gui = {
             $res.append("<br/>");
             resultId++;
         });
-        /* Hack because firefox doesn't update invalid-formats errors */
-        var resHtml = $res.html();
-        $res.html("");
-        $res.html(resHtml);
-        var resRendered = MWS.makeMath($res);
-        $res.replaceWith(resRendered);
     },
 
     "renderResult" : function(schema, resId) {
@@ -134,10 +128,14 @@ MWS.gui = {
         coverage.text(schema['coverage']);
 
         titleElem.append(coverage);
-        titleElem.append(schema['title']);
+        titleElem.append(MWS.makeMath(schema['title']));
         titleElem.find("*[mathcolor=red]").removeAttr("mathcolor").each(function() {
             this.setAttribute("class", "math-highlight-qvar");
         });
+
+        /* Hack because firefox doesn't update invalid-formats errors */
+        var titleElemHtml = titleElem.html();
+        titleElem.html(titleElemHtml);
 
         var bodyHtml = $("<div>");
         schema['formulae'].forEach(function(exprWithUrl) {
