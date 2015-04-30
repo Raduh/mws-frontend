@@ -118,6 +118,10 @@ MWS.gui = {
             $res.append("<br/>");
             resultId++;
         });
+        /* Hack because firefox doesn't update invalid-formats errors */
+        var resHtml = $res.html();
+        $res.html("");
+        $res.html(resHtml);
     },
 
     "renderResult" : function(schema, resId) {
@@ -213,7 +217,7 @@ MWS.gui = {
 
             if (cutElemPM.children().length == 0 && MWS.config.keep_leaves_name) {
                 cutElemPM.attr("mathcolor", "#0066FF");
-                cutElemCM.replaceWith("<qvar>" + qvar_str + "</qvar>");
+                cutElemCM.replaceWith("<qvar>" + cutElemPM.text() + "</qvar>");
             } else {
                 var qvar_str;
                 if (useCounter) qvar_str = "?x" + qvar;
