@@ -122,6 +122,8 @@ MWS.gui = {
         var resHtml = $res.html();
         $res.html("");
         $res.html(resHtml);
+        var resRendered = MWS.makeMath($res);
+        $res.replaceWith(resRendered);
     },
 
     "renderResult" : function(schema, resId) {
@@ -132,7 +134,7 @@ MWS.gui = {
         coverage.text(schema['coverage']);
 
         titleElem.append(coverage);
-        titleElem.append(MWS.makeMath(schema['title']));
+        titleElem.append(schema['title']);
         titleElem.find("*[mathcolor=red]").removeAttr("mathcolor").each(function() {
             this.setAttribute("class", "math-highlight-qvar");
         });
